@@ -2,12 +2,14 @@ package com.example.erc_demo.service;
 
 import com.example.erc_demo.entity.UserEntity;
 import com.example.erc_demo.exception.ServerResponseException;
+import com.example.erc_demo.model.UserAuthDto;
 import com.example.erc_demo.model.UserRegisterDto;
 import com.example.erc_demo.repository.UserRepository;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -15,6 +17,19 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
   private final UserRepository userRepository;
+
+  public void authorizeUser(UserAuthDto userAuthDto) {
+    var userOpt = userRepository.findByLogin(userAuthDto.getLogin());
+
+    if (userOpt.isEmpty()) {
+      throw new ServerResponseException("User with this login doesn't exist");
+    }
+
+    var hashedInputPassword = DigestUtils.sha256Hex(userAuthDto.getPassword());
+    if (!Objects.equals(hashedInputPassword, userOpt.get().getPassword())) {
+      throw new ServerResponseException("Incorrect password");
+    }
+  }
 
   public void registerNewUser(UserRegisterDto userRegisterDto) {
     prepareNewUser(userRegisterDto);
