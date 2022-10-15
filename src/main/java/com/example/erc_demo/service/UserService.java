@@ -32,7 +32,6 @@ public class UserService {
   }
 
   public void registerNewUser(UserRegisterDto userRegisterDto) {
-    prepareNewUser(userRegisterDto);
     validateNewUser(userRegisterDto);
     saveNewUser(userRegisterDto.toEntity());
   }
@@ -48,26 +47,22 @@ public class UserService {
     }
   }
 
-  private void checkIfLoginExists(String login) {
+  private void checkUserExists(String login) {
     var userWithSameLogin = userRepository.findByLogin(login);
     if (userWithSameLogin.isPresent()) {
       throw new ServerResponseException("User with this login already exists");
     }
   }
 
-  /**
-   * Подготавливает данные, заполненные пользователем, к валидации
-   */
-  private void prepareNewUser(UserRegisterDto userRegisterDto) {
-    userRegisterDto.setLogin(userRegisterDto.getLogin().trim());
-    userRegisterDto.setPassword(userRegisterDto.getPassword().trim());
-    userRegisterDto.setDoubledPassword(userRegisterDto.getDoubledPassword().trim());
-    userRegisterDto.setFirstName(userRegisterDto.getFirstName().trim());
-    userRegisterDto.setLastName(userRegisterDto.getLastName().trim());
+  public void checkUserExists(Long id) {
+    var userExistsById = userRepository.existsById(id);
+    if (!userExistsById) {
+      throw new ServerResponseException("User with this id doesn't exist");
+    }
   }
 
   private void validateNewUser(UserRegisterDto userRegisterDto) {
-    checkIfLoginExists(userRegisterDto.getLogin());
+    checkUserExists(userRegisterDto.getLogin());
     checkDoubledPassword(userRegisterDto.getPassword(), userRegisterDto.getDoubledPassword());
   }
 }

@@ -25,4 +25,43 @@
     </createTable>
     <addUniqueConstraint tableName="users" columnNames="login"/>
   </changeSet>
+
+  <changeSet id="20221014-2" author="es-vasilev" context="app" failOnError="true">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="orders"/>
+      </not>
+    </preConditions>
+    <createTable tableName="orders">
+      <column name="id" type="BIGSERIAL">
+        <constraints primaryKey="true" primaryKeyName="pk_orders"/>
+      </column>
+      <column name="address" type="TEXT"/>
+      <column name="phone_number" type="TEXT"/>
+      <column name="user_id" type="BIGINT"/>
+      <column name="created_at" type="TIMESTAMP"/>
+    </createTable>
+    <addForeignKeyConstraint baseTableName="orders" baseColumnNames="user_id"
+      constraintName="fk_orders_users"
+      referencedTableName="users" referencedColumnNames="id" onDelete="CASCADE"/>
+  </changeSet>
+
+  <changeSet id="20221014-3" author="es-vasiliev" context="app" failOnError="true">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="order_items"/>
+      </not>
+    </preConditions>
+    <createTable tableName="order_items">
+      <column name="id" type="BIGSERIAL">
+        <constraints primaryKey="true" primaryKeyName="pk_order_items"/>
+      </column>
+      <column name="order_id" type="BIGINT"/>
+      <column name="product_name" type="TEXT"/>
+      <column name="amount" type="INTEGER"/>
+    </createTable>
+    <addForeignKeyConstraint baseTableName="order_items" baseColumnNames="order_id"
+      constraintName="fk_order_items_orders"
+      referencedTableName="orders" referencedColumnNames="id" onDelete="CASCADE"/>
+  </changeSet>
 </databaseChangeLog>
