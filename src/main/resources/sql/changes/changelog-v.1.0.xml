@@ -64,4 +64,24 @@
       constraintName="fk_order_items_orders"
       referencedTableName="orders" referencedColumnNames="id" onDelete="CASCADE"/>
   </changeSet>
-</databaseChangeLog>
+
+  <changeSet id="20220114-4" author="es-vasilev" context="app" failOnError="true">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="news"/>
+      </not>
+    </preConditions>
+    <createTable tableName="news">
+      <column name="id" type="BIGSERIAL">
+        <constraints primaryKey="true" primaryKeyName="pk_news"/>
+      </column>
+      <column name="header" type="TEXT"/>
+      <column name="article" type="TEXT"/>
+    </createTable>
+    <addUniqueConstraint tableName="news" columnNames="header"/>
+    <sql>
+      INSERT INTO news (header, article) values ('Первая статья', 'Короткая первая статья');
+      INSERT INTO news (header, article) values ('Вторая статья', 'Короткая вторая статья');
+    </sql>
+  </changeSet>
+  </databaseChangeLog>
