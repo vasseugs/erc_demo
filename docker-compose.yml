@@ -1,0 +1,23 @@
+services:
+  erc_db:
+    image: "postgres:11"
+    ports:
+      - "5432:5432"
+    volumes:
+      - /c/Users/vasse/volumes/erc_app
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=erc_demo
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - erc_db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://erc_db:5432/erc_demo
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+
