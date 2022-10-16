@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @Data
 public class NewsArticleDto {
 
-  @NotBlank
+  @NotBlank(message = "Specify header")
   private String header;
 
-  @NotBlank
+  @NotBlank(message = "Article must not be empty")
   private String article;
 }
