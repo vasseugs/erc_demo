@@ -1,0 +1,1 @@
+INSERT INTO users (login, password, first_name, last_name, patronymic, avatar_url, created_at) VALUES ('login', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'firstName', 'lastName', 'patronymic', 'http://www.google.com/hello', '2022-10-16 19:02:16.668797');

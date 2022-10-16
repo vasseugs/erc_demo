@@ -4,12 +4,14 @@ import com.example.erc_demo.entity.OrderEntity;
 import java.util.List;
 import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class OrderDto {
 
   private List<OrderItemDto> orderItems;
