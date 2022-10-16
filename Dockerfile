@@ -1,4 +1,4 @@
 FROM openjdk:11
-COPY target/erc_demo-2.7.4.jar erc_demo.jar
+COPY target/erc_demo-0.0.1-SNAPSHOT.jar erc_demo.jar
 ENTRYPOINT ["java", "-jar", "erc_demo.jar"]
 EXPOSE 8080

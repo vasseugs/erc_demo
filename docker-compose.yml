@@ -3,8 +3,6 @@ services:
     image: "postgres:11"
     ports:
       - "5432:5432"
-    volumes:
-      - /c/Users/vasse/volumes/erc_app
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=postgres

@@ -20,7 +20,7 @@ public class UserRestTest extends AbstractTestContainers {
     var newUser = UserRegisterDto.builder()
         .login("login")
         .password("password")
-        .doubledPassword("password")
+        .repeatedPassword("password")
         .firstName("firstName")
         .lastName("lastName")
         .patronymic("patronymic")

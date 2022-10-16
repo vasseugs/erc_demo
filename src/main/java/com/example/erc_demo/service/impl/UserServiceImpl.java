@@ -42,8 +42,8 @@ public class UserServiceImpl implements UserService {
     userRepository.save(userEntity);
   }
 
-  private void checkDoubledPassword(String password, String doubledPassword) {
-    if (!Objects.equals(password, doubledPassword)) {
+  private void checkRepeatedPassword(String password, String repeatedPassword) {
+    if (!Objects.equals(password, repeatedPassword)) {
       throw new ServerResponseException("Passwords don't match");
     }
   }
@@ -64,6 +64,6 @@ public class UserServiceImpl implements UserService {
 
   private void validateNewUser(UserRegisterDto userRegisterDto) {
     checkUserExists(userRegisterDto.getLogin());
-    checkDoubledPassword(userRegisterDto.getPassword(), userRegisterDto.getDoubledPassword());
+    checkRepeatedPassword(userRegisterDto.getPassword(), userRegisterDto.getRepeatedPassword());
   }
 }
